@@ -1,3 +1,9 @@
+python3-stdlib-extensions (3.7.3-1pexip1) pexip; urgency=medium
+
+  * Prepare Pexip packaging
+
+ -- Huw Jones <huw@pexip.com>  Thu, 10 Jun 2021 10:43:59 +0000
+
 python3-stdlib-extensions (3.7.3-1) unstable; urgency=medium
 
   * Update 3.7 extensions and modules to 3.7.3 (no changes).
