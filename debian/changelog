@@ -1,3 +1,9 @@
+python3-stdlib-extensions (3.7.3-1pexip2) pexip; urgency=medium
+
+  * Bump version
+
+ -- Huw Jones <huw@pexip.com>  Wed, 26 Jan 2022 14:48:19 +0000
+
 python3-stdlib-extensions (3.7.3-1pexip1) pexip; urgency=medium
 
   * Prepare Pexip packaging
