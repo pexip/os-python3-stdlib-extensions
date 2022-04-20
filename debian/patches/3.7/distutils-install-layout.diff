@@ -2,6 +2,8 @@
 # DP: - installs into $prefix/dist-packages instead of $prefix/site-packages.
 # DP: - doesn't encode the python version into the egg name.
 
+Index: b/3.7/Lib/distutils/command/install_egg_info.py
+===================================================================
 --- a/3.7/Lib/distutils/command/install_egg_info.py
 +++ b/3.7/Lib/distutils/command/install_egg_info.py
 @@ -14,18 +14,38 @@ class install_egg_info(Command):
@@ -48,6 +50,8 @@
          self.target = os.path.join(self.install_dir, basename)
          self.outputs = [self.target]
  
+Index: b/3.7/Lib/distutils/command/install.py
+===================================================================
 --- a/3.7/Lib/distutils/command/install.py
 +++ b/3.7/Lib/distutils/command/install.py
 @@ -35,6 +35,20 @@ INSTALL_SCHEMES = {
@@ -135,9 +139,11 @@
  
      def finalize_other(self):
          """Finalizes options for non-posix platforms"""
+Index: b/3.7/Lib/distutils/sysconfig.py
+===================================================================
 --- a/3.7/Lib/distutils/sysconfig.py
 +++ b/3.7/Lib/distutils/sysconfig.py
-@@ -135,6 +135,7 @@ def get_python_lib(plat_specific=0, stan
+@@ -140,6 +140,7 @@ def get_python_lib(plat_specific=0, stan
      If 'prefix' is supplied, use it instead of sys.base_prefix or
      sys.base_exec_prefix -- i.e., ignore 'plat_specific'.
      """
@@ -145,7 +151,7 @@
      if prefix is None:
          if standard_lib:
              prefix = plat_specific and BASE_EXEC_PREFIX or BASE_PREFIX
-@@ -146,6 +147,12 @@ def get_python_lib(plat_specific=0, stan
+@@ -151,6 +152,12 @@ def get_python_lib(plat_specific=0, stan
                                   "lib", "python" + get_python_version())
          if standard_lib:
              return libpython
@@ -158,6 +164,8 @@
          else:
              return os.path.join(libpython, "site-packages")
      elif os.name == "nt":
+Index: b/3.7/Lib/distutils/tests/test_bdist_dumb.py
+===================================================================
 --- a/3.7/Lib/distutils/tests/test_bdist_dumb.py
 +++ b/3.7/Lib/distutils/tests/test_bdist_dumb.py
 @@ -85,7 +85,7 @@ class BuildDumbTestCase(support.TempdirM
@@ -169,6 +177,8 @@
          if not sys.dont_write_bytecode:
              wanted.append('foo.%s.pyc' % sys.implementation.cache_tag)
          self.assertEqual(contents, sorted(wanted))
+Index: b/3.7/Lib/distutils/tests/test_install.py
+===================================================================
 --- a/3.7/Lib/distutils/tests/test_install.py
 +++ b/3.7/Lib/distutils/tests/test_install.py
 @@ -193,7 +193,7 @@ class InstallTestCase(support.TempdirMan
