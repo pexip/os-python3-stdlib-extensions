@@ -14,9 +14,9 @@ export SHELL = /bin/bash
 #rel_ext	= $(strip $(shell dpkg-parsechangelog | awk -F- '/^Version:/ {print $$NF}'))
 
 PYVERS	= $(shell py3versions -vs)
-PYVERS	= 3.9
+PYVERS	= 3.9 3.7
 
-MIN_VER = 3.9.1-0~
+MIN_VER = 3.7.3-0~
 NEXT_VER = 3.10
 
 include /usr/share/dpkg/architecture.mk

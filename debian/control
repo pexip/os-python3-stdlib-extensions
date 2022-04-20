@@ -4,10 +4,10 @@ Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Matthias Klose <doko@debian.org>
 Build-Depends: debhelper (>= 10), rdfind,
-# libpython3.7-dev,
-# libpython3.7-dbg,
-# python3.7-dev:any,
-# python3.7-dbg:any,
+  libpython3.7-dev,
+  libpython3.7-dbg,
+  python3.7-dev:any,
+  python3.7-dbg:any,
 #  libpython3.8-dev,
 #  libpython3.8-dbg,
 #  python3.8-dev:any,
