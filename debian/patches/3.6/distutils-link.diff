@@ -1,7 +1,5 @@
 # DP: Don't add standard library dirs to library_dirs and runtime_library_dirs.
 
-Index: b/3.6/Lib/distutils/unixccompiler.py
-===================================================================
 --- a/3.6/Lib/distutils/unixccompiler.py
 +++ b/3.6/Lib/distutils/unixccompiler.py
 @@ -155,6 +155,17 @@ class UnixCCompiler(CCompiler):

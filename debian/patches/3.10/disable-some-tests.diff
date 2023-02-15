@@ -2,7 +2,7 @@
 
 --- a/3.10/Lib/distutils/tests/test_build_ext.py
 +++ b/3.10/Lib/distutils/tests/test_build_ext.py
-@@ -112,6 +112,7 @@ class BuildExtTestCase(TempdirManager,
+@@ -115,6 +115,7 @@ class BuildExtTestCase(TempdirManager,
          """)
          assert_python_ok('-c', code)
  

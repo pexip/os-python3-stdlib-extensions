@@ -1,7 +1,5 @@
 # DP: Disable some failing tests we are not interested in
 
-Index: b/3.9/Lib/distutils/tests/test_build_ext.py
-===================================================================
 --- a/3.9/Lib/distutils/tests/test_build_ext.py
 +++ b/3.9/Lib/distutils/tests/test_build_ext.py
 @@ -111,6 +111,7 @@ class BuildExtTestCase(TempdirManager,
