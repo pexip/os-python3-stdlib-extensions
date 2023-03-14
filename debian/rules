@@ -16,10 +16,10 @@ distrelease  := $(shell lsb_release -cs)
 #rel_ext	= $(strip $(shell dpkg-parsechangelog | awk -F- '/^Version:/ {print $$NF}'))
 
 PYVERS	= $(shell py3versions -vs)
-PYVERS	= 3.11
+PYVERS	= 3.9
 
-MIN_VER = 3.10.8-0~
-NEXT_VER = 3.12
+MIN_VER = 3.9.1-0~
+NEXT_VER = 3.10
 
 # FIXME: remove sid when uploading to unstable, after bullseye is released
 #ifeq (,$(filter $(distrelase), jessie stretch buster bullseye bookworm sid precise trusty xenial bionic focal groovy hirsute))

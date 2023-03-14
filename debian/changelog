@@ -1,6 +1,7 @@
 python3-stdlib-extensions (3.11.2-2pexip1) pexip; urgency=medium
 
   * New upstream release
+  * Build for python3.9
 
  -- Huw Jones <huw@pexip.com>  Tue, 14 Mar 2023 16:21:37 +0000
 
