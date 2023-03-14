@@ -1,5 +1,3 @@
-Index: b/3.7/Lib/distutils/sysconfig.py
-===================================================================
 --- a/3.7/Lib/distutils/sysconfig.py
 +++ b/3.7/Lib/distutils/sysconfig.py
 @@ -112,6 +112,9 @@ def get_python_inc(plat_specific=0, pref

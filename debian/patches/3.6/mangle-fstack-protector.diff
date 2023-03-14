@@ -1,8 +1,6 @@
 # DP: When using GCC versions older than 4.9, automagically mangle
 # DP: -fstack-protector-strong to -fstack-protector
 
-Index: b/3.6/Lib/distutils/sysconfig.py
-===================================================================
 --- a/3.6/Lib/distutils/sysconfig.py
 +++ b/3.6/Lib/distutils/sysconfig.py
 @@ -13,6 +13,7 @@ import _imp

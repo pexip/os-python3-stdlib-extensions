@@ -2,8 +2,6 @@
 # DP: - installs into $prefix/dist-packages instead of $prefix/site-packages.
 # DP: - doesn't encode the python version into the egg name.
 
-Index: b/3.6/Lib/distutils/command/install_egg_info.py
-===================================================================
 --- a/3.6/Lib/distutils/command/install_egg_info.py
 +++ b/3.6/Lib/distutils/command/install_egg_info.py
 @@ -14,18 +14,38 @@ class install_egg_info(Command):
@@ -50,8 +48,6 @@ Index: b/3.6/Lib/distutils/command/install_egg_info.py
          self.target = os.path.join(self.install_dir, basename)
          self.outputs = [self.target]
  
-Index: b/3.6/Lib/distutils/command/install.py
-===================================================================
 --- a/3.6/Lib/distutils/command/install.py
 +++ b/3.6/Lib/distutils/command/install.py
 @@ -35,6 +35,20 @@ INSTALL_SCHEMES = {
@@ -139,8 +135,6 @@ Index: b/3.6/Lib/distutils/command/install.py
  
      def finalize_other(self):
          """Finalizes options for non-posix platforms"""
-Index: b/3.6/Lib/distutils/sysconfig.py
-===================================================================
 --- a/3.6/Lib/distutils/sysconfig.py
 +++ b/3.6/Lib/distutils/sysconfig.py
 @@ -122,6 +122,7 @@ def get_python_lib(plat_specific=0, stan
@@ -164,8 +158,6 @@ Index: b/3.6/Lib/distutils/sysconfig.py
          else:
              return os.path.join(libpython, "site-packages")
      elif os.name == "nt":
-Index: b/3.6/Lib/distutils/tests/test_bdist_dumb.py
-===================================================================
 --- a/3.6/Lib/distutils/tests/test_bdist_dumb.py
 +++ b/3.6/Lib/distutils/tests/test_bdist_dumb.py
 @@ -85,7 +85,7 @@ class BuildDumbTestCase(support.TempdirM
@@ -177,8 +169,6 @@ Index: b/3.6/Lib/distutils/tests/test_bdist_dumb.py
          if not sys.dont_write_bytecode:
              wanted.append('foo.%s.pyc' % sys.implementation.cache_tag)
          self.assertEqual(contents, sorted(wanted))
-Index: b/3.6/Lib/distutils/tests/test_install.py
-===================================================================
 --- a/3.6/Lib/distutils/tests/test_install.py
 +++ b/3.6/Lib/distutils/tests/test_install.py
 @@ -193,7 +193,7 @@ class InstallTestCase(support.TempdirMan
