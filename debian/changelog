@@ -1,3 +1,15 @@
+python3-stdlib-extensions (3.11.2-3pexip1) pexip; urgency=medium
+
+  * New upstream release
+
+ -- Steve McIntyre <steve.mcintyre@pexip.com>  Mon, 24 Jul 2023 15:24:30 +0000
+
+python3-stdlib-extensions (3.11.2-3) unstable; urgency=medium
+
+  * Remove 3.10 byte code on upgrade. Closes: #1031909.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 02 May 2023 15:34:18 +0200
+
 python3-stdlib-extensions (3.11.2-2pexip1) pexip; urgency=medium
 
   * New upstream release
