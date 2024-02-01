@@ -1,3 +1,9 @@
+python3-stdlib-extensions (3.11.2-3+pexip24u4) pexip-bookworm; urgency=medium
+
+  * New versioning scheme
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 01 Feb 2024 16:27:43 +0000
+
 python3-stdlib-extensions (3.11.2-3pexip3) pexip-bookworm; urgency=medium
 
   * Bookworm build for product distribution
