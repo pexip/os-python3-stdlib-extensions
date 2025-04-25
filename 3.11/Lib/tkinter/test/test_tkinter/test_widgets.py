@@ -4,7 +4,7 @@ from tkinter import TclError
 import os
 from test.support import requires
 
-from tkinter.test.support import (requires_tcl,
+from tkinter.test.support import (requires_tk,
                                   get_tk_patchlevel, widget_eq,
                                   AbstractDefaultRootTest)
 from tkinter.test.widget_tests import (
@@ -77,6 +77,8 @@ class ToplevelTest(AbstractToplevelTest, unittest.TestCase):
 
     def test_configure_screen(self):
         widget = self.create()
+        if widget._windowingsystem != 'x11':
+            self.skipTest('Not using Tk for X11')
         self.assertEqual(widget['screen'], '')
         try:
             display = os.environ['DISPLAY']
@@ -612,7 +614,7 @@ class TextTest(AbstractWidgetTest, unittest.TestCase):
         widget = self.create()
         self.checkColorParam(widget, 'inactiveselectbackground')
 
-    @requires_tcl(8, 6)
+    @requires_tk(8, 6)
     def test_configure_insertunfocussed(self):
         widget = self.create()
         self.checkEnumParam(widget, 'insertunfocussed',
@@ -659,7 +661,9 @@ class TextTest(AbstractWidgetTest, unittest.TestCase):
         widget = self.create()
         self.checkParam(widget, 'tabs', (10.2, 20.7, '1i', '2i'))
         self.checkParam(widget, 'tabs', '10.2 20.7 1i 2i',
-                        expected=('10.2', '20.7', '1i', '2i'))
+                        expected=(10.2, 20.7, '1i', '2i')
+                                 if get_tk_patchlevel(self.root) >= (8, 6, 14)
+                                 else ('10.2', '20.7', '1i', '2i'))
         self.checkParam(widget, 'tabs', '2c left 4c 6c center',
                         expected=('2c', 'left', '4c', '6c', 'center'))
         self.checkInvalidParam(widget, 'tabs', 'spam',
@@ -917,7 +921,7 @@ class CanvasTest(AbstractWidgetTest, unittest.TestCase):
         for i in range(4):
             self.assertIsInstance(coords[i], float)
 
-    @requires_tcl(8, 6)
+    @requires_tk(8, 6)
     def test_moveto(self):
         widget = self.create()
         i1 = widget.create_rectangle(1, 1, 20, 20, tags='group')
@@ -962,7 +966,7 @@ class ListboxTest(AbstractWidgetTest, unittest.TestCase):
         self.checkEnumParam(widget, 'activestyle',
                             'dotbox', 'none', 'underline')
 
-    test_configure_justify = requires_tcl(8, 6, 5)(StandardOptionsTests.test_configure_justify)
+    test_configure_justify = requires_tk(8, 6, 5)(StandardOptionsTests.test_configure_justify)
 
     def test_configure_listvariable(self):
         widget = self.create()
@@ -992,12 +996,16 @@ class ListboxTest(AbstractWidgetTest, unittest.TestCase):
             widget.itemconfigure()
         with self.assertRaisesRegex(TclError, 'bad listbox index "red"'):
             widget.itemconfigure('red')
+        if get_tk_patchlevel(self.root) >= (8, 6, 14):
+            prefix = ('background', '', '', '')
+        else:
+            prefix = ('background', 'background', 'Background', '')
         self.assertEqual(widget.itemconfigure(0, 'background'),
-                         ('background', 'background', 'Background', '', 'red'))
+                         (*prefix, 'red'))
         self.assertEqual(widget.itemconfigure('end', 'background'),
-                         ('background', 'background', 'Background', '', 'violet'))
+                         (*prefix, 'violet'))
         self.assertEqual(widget.itemconfigure('@0,0', 'background'),
-                         ('background', 'background', 'Background', '', 'red'))
+                         (*prefix, 'red'))
 
         d = widget.itemconfigure(0)
         self.assertIsInstance(d, dict)
@@ -1101,7 +1109,7 @@ class ScaleTest(AbstractWidgetTest, unittest.TestCase):
 
     def test_configure_from(self):
         widget = self.create()
-        conv = float if get_tk_patchlevel() >= (8, 6, 10) else float_round
+        conv = float if get_tk_patchlevel(self.root) >= (8, 6, 10) else float_round
         self.checkFloatParam(widget, 'from', 100, 14.9, 15.1, conv=conv)
 
     def test_configure_label(self):
@@ -1228,19 +1236,19 @@ class PanedWindowTest(AbstractWidgetTest, unittest.TestCase):
         widget = self.create()
         self.checkBooleanParam(widget, 'opaqueresize')
 
-    @requires_tcl(8, 6, 5)
+    @requires_tk(8, 6, 5)
     def test_configure_proxybackground(self):
         widget = self.create()
         self.checkColorParam(widget, 'proxybackground')
 
-    @requires_tcl(8, 6, 5)
+    @requires_tk(8, 6, 5)
     def test_configure_proxyborderwidth(self):
         widget = self.create()
         self.checkPixelsParam(widget, 'proxyborderwidth',
                               0, 1.3, 2.9, 6, -2, '10p',
                               conv=False)
 
-    @requires_tcl(8, 6, 5)
+    @requires_tk(8, 6, 5)
     def test_configure_proxyrelief(self):
         widget = self.create()
         self.checkReliefParam(widget, 'proxyrelief')
@@ -1378,6 +1386,11 @@ class MenuTest(AbstractWidgetTest, unittest.TestCase):
     def create(self, **kwargs):
         return tkinter.Menu(self.root, **kwargs)
 
+    def test_indexcommand_none(self):
+        widget = self.create()
+        i = widget.index('none')
+        self.assertIsNone(i)
+
     def test_configure_postcommand(self):
         widget = self.create()
         self.checkCommandParam(widget, 'postcommand')
@@ -1396,10 +1409,13 @@ class MenuTest(AbstractWidgetTest, unittest.TestCase):
 
     def test_configure_type(self):
         widget = self.create()
+        opts = ('normal, tearoff, or menubar'
+                if widget.info_patchlevel() < (8, 7) else
+                'menubar, normal, or tearoff')
         self.checkEnumParam(
             widget, 'type',
             'normal', 'tearoff', 'menubar',
-            errmsg='bad type "{}": must be normal, tearoff, or menubar',
+            errmsg='bad type "{}": must be ' + opts,
             )
 
     def test_entryconfigure(self):
